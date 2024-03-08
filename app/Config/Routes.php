@@ -5,4 +5,4 @@ use CodeIgniter\Router\RouteCollection;
 
 $routes->get('/', 'Home::index');
 
-$routes->resource('users');
+$routes->resource('api/users', ['controller' => 'UsersController']);
