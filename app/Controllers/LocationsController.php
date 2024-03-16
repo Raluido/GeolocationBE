@@ -6,15 +6,22 @@ use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\RESTful\ResourceController;
 use CodeIgniter\HTTP\Request;
-use App\Models\User;
+use App\Models\Location;
 
-class UsersController extends ResourceController
+class LocationsController extends ResourceController
 {
-    protected $modelName = 'App\Models\User';
+    protected $modelName = 'App\Models\Location';
     protected $format    = 'json';
 
     public function index()
     {
+        log_message('debug', 'yeahhh');
         return $this->respond($this->model->findAll());
+    }
+
+    public function create()
+    {
+        log_message('debug', 'yeahhh');
+        log_message('debug', '', $this->request->getJSON());
     }
 }
