@@ -44,12 +44,12 @@ class AddLocation extends Migration
             ],
 
             'lat' => [
-                'type'              => 'INTEGER',
+                'type'              => 'FLOAT',
                 'constraint'        => '50'
             ],
 
             'lng' => [
-                'type'              => 'INTEGER',
+                'type'              => 'FLOAT',
                 'constraint'        => '50'
             ],
         ]);

@@ -21,7 +21,10 @@ class LocationsController extends ResourceController
 
     public function create()
     {
-        log_message('debug', 'yeahhh');
-        log_message('debug', '', $this->request->getJSON());
+        $model = new Location();
+        $user  = $model->save($this->request->getJSON());
+
+        // Respond with 201 status code
+        return $this->respondCreated();
     }
 }
