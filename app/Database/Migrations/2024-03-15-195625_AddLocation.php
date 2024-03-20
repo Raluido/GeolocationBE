@@ -43,13 +43,8 @@ class AddLocation extends Migration
                 'constraint'        => '50'
             ],
 
-            'lat' => [
-                'type'              => 'FLOAT',
-                'constraint'        => '50'
-            ],
-
-            'lng' => [
-                'type'              => 'FLOAT',
+            'geog' => [
+                'type'              => 'GEOGRAPHY',
                 'constraint'        => '50'
             ],
         ]);
