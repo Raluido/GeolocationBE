@@ -17,6 +17,8 @@ class CorsFilters implements FilterInterface
 
     public function before(RequestInterface $request, $arguments = null)
     {
+        log_message('debug', 'cors');
+
         if (array_key_exists('HTTP_ORIGIN', $_SERVER)) {
             $origin = $_SERVER['HTTP_ORIGIN'];
         } else if (array_key_exists('HTTP_REFERER', $_SERVER)) {

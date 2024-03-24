@@ -15,14 +15,13 @@ class LocationsController extends ResourceController
 
     public function index()
     {
-        log_message('debug', 'yeahhh');
         return $this->respond($this->model->findAll());
     }
 
     public function create()
     {
         $model = new Location();
-        $user  = $model->save($this->request->getJSON());
+        $location  = $model->save($this->request->getJSON());
 
         // Respond with 201 status code
         return $this->respondCreated();
