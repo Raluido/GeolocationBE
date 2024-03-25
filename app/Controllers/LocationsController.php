@@ -22,12 +22,12 @@ class LocationsController extends ResourceController
 
     public function create()
     {
-        $model = new Location();
+        log_message('error', 'holi');
+        // $model = new Location();
         // $locations  = $model->save($this->request->getJSON());
 
-        log_message('debug', $this->request->getJSON());
 
-        die();
+        // die();
 
         // $geojson = file_get_contents("o/1.geojson");
         // $features = json_decode($geojson, TRUE)->features;
