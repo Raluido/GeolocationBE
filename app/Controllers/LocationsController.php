@@ -11,7 +11,7 @@ use App\Models\Location;
 class LocationsController extends ResourceController
 {
     protected $modelName = 'App\Models\Location';
-    protected $format    = 'json';
+    protected $format    = 'geo+json';
 
     public function index()
     {
@@ -20,8 +20,10 @@ class LocationsController extends ResourceController
 
     public function create()
     {
-        $model = new Location();
-        $location  = $model->save($this->request->getJSON());
+        log_message('error', 'ahora si');
+
+        // $model = new Location();
+        // $location  = $model->save();
 
         // Respond with 201 status code
         return $this->respondCreated();
