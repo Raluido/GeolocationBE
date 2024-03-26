@@ -7,6 +7,7 @@ use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\RESTful\ResourceController;
 use CodeIgniter\HTTP\Request;
 use App\Models\Location;
+use PhpParser\Node\Expr\Cast\Object_;
 
 class LocationsController extends ResourceController
 {
@@ -15,16 +16,17 @@ class LocationsController extends ResourceController
 
     public function index()
     {
-        log_message('debug', 'yeahhh');
         return $this->respond($this->model->findAll());
     }
 
     public function create()
     {
-        $model = new Location();
-        $user  = $model->save($this->request->getJSON());
+        $test = ['peep', 'asdasd'];
+        log_message('error', 'asdasd', $test);
+        // $model = new Location();
+        // $model->save($this->request->getJSON());
 
-        // Respond with 201 status code
-        return $this->respondCreated();
+        // // Respond with 201 status code
+        // return $this->respondCreated();
     }
 }

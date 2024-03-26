@@ -9,48 +9,25 @@ class AddLocation extends Migration
     public function up()
     {
         $this->forge->addField([
-            'id' => [
+            'gid' => [
                 'type'              => 'INT',
                 'constraint'        => '10',
                 'unsigned'          => true,
                 'auto_increment'    => true,
             ],
 
-            'ccaa' => [
+            'name' => [
                 'type'              => 'VARCHAR',
                 'constraint'        => '50'
             ],
-
-            'province' => [
-                'type'              => 'VARCHAR',
-                'constraint'        => '50'
-            ],
-
-            'city' => [
-                'type'              => 'VARCHAR',
-                'constraint'        => '50'
-            ],
-
-
-            'project' => [
-                'type'              => 'VARCHAR',
-                'constraint'        => '50'
-            ],
-
 
             'description' => [
                 'type'              => 'VARCHAR',
                 'constraint'        => '50'
             ],
 
-            'lat' => [
-                'type'              => 'FLOAT',
-                'constraint'        => '50'
-            ],
-
-            'lng' => [
-                'type'              => 'FLOAT',
-                'constraint'        => '50'
+            'location' => [
+                'type'              => 'GEOMETRY',
             ],
         ]);
         $this->forge->addKey('id', true);

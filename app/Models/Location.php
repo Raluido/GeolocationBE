@@ -7,12 +7,12 @@ use CodeIgniter\Model;
 class Location extends Model
 {
     protected $table            = 'locations';
-    protected $primaryKey       = 'id';
+    protected $primaryKey       = 'gid';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['ccaa', 'province', 'city', 'project', 'description', 'lat', 'lng'];
+    protected $allowedFields    = ['name', 'description', 'location'];
 
     protected bool $allowEmptyInserts = false;
 
