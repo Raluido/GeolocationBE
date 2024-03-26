@@ -12,7 +12,7 @@ use PhpParser\Node\Expr\Cast\Object_;
 class LocationsController extends ResourceController
 {
     protected $modelName = 'App\Models\Location';
-    protected $format    = 'json';
+    protected $format    = 'geo+json';
 
     public function index()
     {
