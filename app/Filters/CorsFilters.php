@@ -17,7 +17,7 @@ class CorsFilters implements FilterInterface
 
     public function before(RequestInterface $request, $arguments = null)
     {
-        log_message('debug', 'cors');
+        log_message('error', 'cors');
 
         if (array_key_exists('HTTP_ORIGIN', $_SERVER)) {
             $origin = $_SERVER['HTTP_ORIGIN'];
@@ -41,7 +41,7 @@ class CorsFilters implements FilterInterface
         header("Access-Control-Allow-Methods: GET, PUT, POST, DELETE, PATCH, OPTIONS");
         header("Access-Control-Allow-Credentials: true");
         header("Access-Control-Max-Age: 3600");
-        header('content-type: application/geo+json;');
+        header('Content-Type: application/geo+json;');
         $method = $_SERVER['REQUEST_METHOD'];
         if ($method == "OPTIONS") {
             header("HTTP/1.1 200 OK CORS");

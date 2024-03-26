@@ -30,7 +30,7 @@ class AddLocation extends Migration
                 'type'              => 'GEOMETRY',
             ],
         ]);
-        $this->forge->addKey('id', true);
+        $this->forge->addKey('gid', true);
         $this->forge->createTable('locations');
     }
 

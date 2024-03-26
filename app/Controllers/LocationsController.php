@@ -11,7 +11,7 @@ use PhpParser\Node\Expr\Cast\Object_;
 
 class LocationsController extends ResourceController
 {
-    protected $modelName = 'App\Models\Location';
+    protected $locationModel = 'App\Models\Location';
     protected $format    = 'geo+json';
 
     public function index()
@@ -21,12 +21,46 @@ class LocationsController extends ResourceController
 
     public function create()
     {
-        $test = ['peep', 'asdasd'];
-        log_message('error', 'asdasd', $test);
-        // $model = new Location();
-        // $model->save($this->request->getJSON());
+        $locationsObj = $this->request->getJSON();
+        $properties = $locationsObj->features[0]->properties;
+        $geometry = $locationsObj->features[0]->geometry;
+
+        $name = (string)$properties->name;
+        $description = (string)$properties->description;
+        $type = $geometry->type;
+        $coordinates = $geometry->coordinates;
+
+        if ($type == 'Point') {
+            $point = '(' . $coordinates[0] . ' ' . $coordinates[1] . ')';
+        } else if ($type == 'Polygon') {
+            $coordinates = $geometry->coordinates[0];
+            $point = '(';
+            foreach ($coordinates as $key => $value) {
+                if (count($coordinates) - 1 != $key) $point .= $value[0] . ' ' . $value[1] . ', ';
+                else $point .= $value[0] . ' ' . $value[1] . ')';
+            }
+        } else {
+            $coordinates = $geometry->coordinates[0];
+            $point = '(';
+            foreach ($coordinates as $key => $value) {
+                if (count($coordinates) - 1 != $key) $point .= $value[0] . ' ' . $value[1] . ', ';
+                else $point += $value[0] . ' ' . $value[1] . ')';
+            }
+        }
+
+        log_message('error', $type . $point);
+        die();
+
+        $data = [
+            'name' => $name,
+            'description' => $description,
+            'location' => $type . $point
+        ];
+
+        $location = new Location();
+        $location->save($data);
 
         // // Respond with 201 status code
-        // return $this->respondCreated();
+        return $this->respondCreated();
     }
 }
