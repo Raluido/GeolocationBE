@@ -11,11 +11,20 @@ use App\Models\Location;
 
 class LocationsController extends ResourceController
 {
+    protected $modelName = 'App\Models\Location';
+    protected $format = 'json';
+    protected $db;
+
+    public function __construct()
+    {
+        $this->db = \Config\Database::connect();
+    }
+
     public function index()
     {
-        $newModel = new Location();
-
-        return $this->respond($this->$newModel->findAll());
+        $query = $this->db->query('SELECT name, description, ST_AsText(location) as location FROM locations');
+        $results = $query->getResult();
+        return $this->respond($results);
     }
 
     public function create()
