@@ -27,16 +27,15 @@ class LocationsController extends ResourceController
                 'type', 'FeatureCollection',
                 'features', jsonb_agg(ST_AsGeoJSON(t.*)::json)) 
             FROM (
-                SELECT jsonb_build_object(
-                    'type', 'Feature',
-                    'gid', 'gid',
-                    'geometry', ST_AsGeoJSON(location)::jsonb,
-                    'properties', to_jsonb(locations) - 'gid' - 'location'
-                ) AS feature
-                FROM locations AS t;"
+                SELECT
+                name,
+                description,
+                ST_AsText(geom)::geometry
+                FROM 
+                locations
+                ) AS t(name, description, geom);"
         );
         $results = $query->getResult();
-        log_message('error', $results['features']);
         return $this->respond($results);
     }
 
@@ -72,7 +71,7 @@ class LocationsController extends ResourceController
         $data = [
             'name' => $name,
             'description' => $description,
-            'location' => $type . $point
+            'geom' => $type . $point
         ];
 
         $newModel = new Location();

@@ -26,7 +26,7 @@ class AddLocation extends Migration
                 'constraint'        => '50'
             ],
 
-            'location' => [
+            'geom' => [
                 'type'              => 'GEOMETRY',
             ],
         ]);
