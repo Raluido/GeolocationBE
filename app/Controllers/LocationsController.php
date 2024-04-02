@@ -22,8 +22,21 @@ class LocationsController extends ResourceController
 
     public function index()
     {
-        $query = $this->db->query('SELECT name, description, ST_AsText(location) as location FROM locations');
+        $query = $this->db->query(
+            "SELECT json_build_object(
+                'type', 'FeatureCollection',
+                'features', jsonb_agg(ST_AsGeoJSON(t.*)::json)) 
+            FROM (
+                SELECT jsonb_build_object(
+                    'type', 'Feature',
+                    'gid', 'gid',
+                    'geometry', ST_AsGeoJSON(location)::jsonb,
+                    'properties', to_jsonb(locations) - 'gid' - 'location'
+                ) AS feature
+                FROM locations AS t;"
+        );
         $results = $query->getResult();
+        log_message('error', $results['features']);
         return $this->respond($results);
     }
 
