@@ -47,6 +47,8 @@ class LocationsController extends ResourceController
 
         $name = (string)$properties->name;
         $description = (string)$properties->description;
+        if ($properties->radius) $radius = (string)$properties->radius;
+        else $radius = null;
         $type = $geometry->type;
         $coordinates = $geometry->coordinates;
 
@@ -71,7 +73,8 @@ class LocationsController extends ResourceController
         $data = [
             'name' => $name,
             'description' => $description,
-            'geom' => $type . $point
+            'geom' => $type . $point,
+            'radius' => $radius
         ];
 
         $newModel = new Location();

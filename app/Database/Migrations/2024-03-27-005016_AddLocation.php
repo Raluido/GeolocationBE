@@ -26,6 +26,11 @@ class AddLocation extends Migration
                 'constraint'        => '50'
             ],
 
+            'radius' => [
+                'type'              => 'VARCHAR',
+                'constraint'        => '50'
+            ],
+
             'geom' => [
                 'type'              => 'GEOMETRY',
             ],
