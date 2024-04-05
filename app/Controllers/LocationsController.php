@@ -30,11 +30,10 @@ class LocationsController extends ResourceController
                 SELECT
                 name,
                 description,
-                radius,
                 ST_AsText(geom)::geometry
                 FROM 
                 locations
-                ) AS t(name, description, radius, geom);"
+                ) AS t(name, description, geom);"
         );
         $results = $query->getResult();
         return $this->respond($results);
@@ -48,7 +47,6 @@ class LocationsController extends ResourceController
 
         $name = (string)$properties->name;
         $description = (string)$properties->description;
-        $radius = (string)$properties->radius;
 
         $type = $geometry->type;
         $coordinates = $geometry->coordinates;
@@ -75,7 +73,6 @@ class LocationsController extends ResourceController
             'name' => $name,
             'description' => $description,
             'geom' => $type . $point,
-            'radius' => $radius
         ];
 
         $newModel = new Location();
