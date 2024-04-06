@@ -20,20 +20,23 @@ class LocationsController extends ResourceController
         $this->db = \Config\Database::connect();
     }
 
-    public function index()
+    public function index($offset = 0)
     {
         $query = $this->db->query(
             "SELECT json_build_object(
                 'type', 'FeatureCollection',
-                'features', jsonb_agg(ST_AsGeoJSON(t.*)::json)) 
+                'features', jsonb_agg(ST_AsGeoJSON(t.*)::json))
             FROM (
                 SELECT
+                gid,
                 name,
                 description,
                 ST_AsText(geom)::geometry
                 FROM 
                 locations
-                ) AS t(name, description, geom);"
+                LIMIT 5 OFFSET $offset
+                ) 
+            AS t(gid, name, description, geom);"
         );
         $results = $query->getResult();
         return $this->respond($results);
