@@ -20,8 +20,10 @@ class LocationsController extends ResourceController
         $this->db = \Config\Database::connect();
     }
 
-    public function index($offset = 0)
+    public function index()
     {
+        log_message('error', $this->request->$_POST[0]);
+
         $query = $this->db->query(
             "SELECT json_build_object(
                 'type', 'FeatureCollection',
@@ -34,7 +36,7 @@ class LocationsController extends ResourceController
                 ST_AsText(geom)::geometry
                 FROM 
                 locations
-                LIMIT 5 OFFSET $offset
+                LIMIT 5 OFFSET 0
                 ) 
             AS t(gid, name, description, geom);"
         );
