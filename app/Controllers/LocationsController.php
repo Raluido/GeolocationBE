@@ -22,23 +22,27 @@ class LocationsController extends ResourceController
 
     public function index()
     {
-        log_message('error', $this->request->$_POST[0]);
+        $page = $this->request->getUri()->getSegment(3);
+        $offset = ($page - 1) * 5;
 
         $query = $this->db->query(
-            "SELECT json_build_object(
-                'type', 'FeatureCollection',
-                'features', jsonb_agg(ST_AsGeoJSON(t.*)::json))
-            FROM (
-                SELECT
-                gid,
-                name,
-                description,
-                ST_AsText(geom)::geometry
-                FROM 
-                locations
-                LIMIT 5 OFFSET 0
-                ) 
-            AS t(gid, name, description, geom);"
+            "WITH items AS(
+                SELECT * FROM locations)        
+                SELECT json_build_object(
+                    'type', 'FeatureCollection',
+                    'features', jsonb_agg(ST_AsGeoJSON(t.*)::json))
+                FROM (
+                    SELECT
+                    gid,
+                    name,
+                    description,
+                    ST_AsText(geom)::geometry,
+                    COUNT(*) OVER() AS total
+                    FROM 
+                    items
+                    LIMIT 5 OFFSET $offset
+                    ) 
+                AS t(gid, name, description, geom, total);"
         );
         $results = $query->getResult();
         return $this->respond($results);
